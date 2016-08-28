@@ -12,6 +12,6 @@ assert(API_KEY is not None)  # TG_API_KEY environment variable
 HOSTNAME = os.getenv('TG_HOSTNAME', None)
 # can be None
 
-URL_PATH = os.getenv('URL_PATH', "mlfw/")
+URL_PATH = os.getenv('URL_PATH', "mlfw")
 assert(URL_PATH is not None)  # URL_PATH environment variable
 

@@ -30,17 +30,23 @@ logging.add_colored_handler(level=logging.DEBUG)
 mlfw = MLFW(bot)
 
 
-@app.route("/info/<command>")
-def info(command):
+@app.route("/info/<api_key>/<command>")
+def info(api_key, command):
+
     """
     Issue commands. E.g. /info/getMe
 
     :param command:
     :return:
     """
+    if api_key != API_KEY:
+        error_msg = "Wrong API key: {wrong_key}".format(wrong_key=api_key)
+        logger.warning(error_msg)
+        return error_msg, 403
+    # end if
     logger.debug("COMMAND: {cmd}, ARGS: {args}".format(cmd=command, args=request.args))
     import json
-    return json.dumps(bot.do(command, **request.args))
+    return repr(bot.do(command, **request.args))
 
 
 @app.route("/host")
@@ -60,14 +66,14 @@ def host():
 
 @app.route("/init")
 def init():
-    path = "/bot/" + API_KEY + "/income"
+    path = "bot/" + API_KEY + "/income"
     hostname = HOSTNAME
     if not hostname:
         info = DictObject.objectify(requests.get('http://ipinfo.io').json())
         logger.info("PATH: {}".format(info))
         hostname = str(info.ip)
     # end if
-    webhook_url = "https://" + hostname + URL_PATH + path
+    webhook_url = "https://" + hostname + "/" + URL_PATH + "/" + path
     logger.success("URL: {}".format(webhook_url))
     logger.debug(bot.set_webhook())
 
@@ -80,7 +86,7 @@ def init():
 
     logger.success(response)
     import json
-    return json.dumps({"status": "ok", "webhook": webhook_url, "response": response})
+    return json.dumps({"status": "ok", "webhook": webhook_url, "response": repr(response)})
 # end def
 
 
@@ -105,6 +111,7 @@ def income(api_key):
     query = update.inline_query.query
     query_offset = update.inline_query.offset
     mlfw.search(query, inline_query_id, offset=query_offset)
+    return "ok"
 # end def
 
 
