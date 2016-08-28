@@ -7,7 +7,7 @@ from luckydonaldUtils.logger import logging
 from pytgbot import Bot
 from pytgbot.api_types.receivable.updates import Update
 
-from secrets import API_KEY, HOSTNAME
+from secrets import API_KEY, HOSTNAME, URL_PATH
 from api import MLFW
 
 __author__ = 'luckydonald'
@@ -24,7 +24,7 @@ bot = Bot(API_KEY, return_python_objects=False)
 # so any nanosecond this adds is too much,
 # resulting in the queries timing out.
 
-username = bot.get_me().username
+username = bot.get_me().result.username
 logging.add_colored_handler(level=logging.DEBUG)
 
 mlfw = MLFW(bot)
@@ -67,7 +67,7 @@ def init():
         logger.info("PATH: {}".format(info))
         hostname = str(info.ip)
     # end if
-    webhook_url = "https://" + hostname + "/dumper" + path
+    webhook_url = "https://" + hostname + URL_PATH + path
     logger.success("URL: {}".format(webhook_url))
     logger.debug(bot.set_webhook())
 
