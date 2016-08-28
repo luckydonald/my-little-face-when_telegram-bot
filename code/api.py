@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from json import dumps
-from luckydonaldUtils.download import get_json
+
+import requests
+from DictObject import DictObject
 from luckydonaldUtils.logger import logging
 from pytgbot.api_types.sendable.inline import InlineQueryResultArticle, InputTextMessageContent, InlineQueryResultGif, \
     InlineQueryResultPhoto
@@ -146,3 +148,15 @@ class MLFW(object):
         return res.result
     # end def
 # end class
+
+HEADERS = {
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X10.69; rv:4458.42) Gecko/4458 Firefox/69.0 Pon3Downloader'}
+
+
+def get_json(url, objectify=True, **kwargs):
+    kwargs.setdefault("headers", HEADERS)
+    json = requests.get(url, **kwargs).json()
+    if objectify:
+        return DictObject.objectify(json)
+    return json
+# end def
