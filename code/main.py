@@ -30,7 +30,35 @@ logging.add_colored_handler(level=logging.DEBUG)
 mlfw = MLFW(bot)
 
 
+def to_json_remove_api_key(func):
+    """
+    Jsonfify returned stuff, if dict or list
+    Then set mimetype to "text/json"
+
+    :param func: the function to wrap
+    :return:
+    """
+    from functools import wraps
+    @wraps(func)
+    def remove_api_key_inner(*args, **kwargs):
+        response = func(*args, **kwargs)
+        if isinstance(response, (dict, list)):
+            import json
+            response = json.dumps(response)
+        # end if
+        if isinstance(response, str):
+            response_kwargs = {}
+            response_kwargs.setdefault("mimetype", "text/json")
+            from flask import Response
+            return Response(response.replace(API_KEY, "<API_KEY>"), **response_kwargs)
+        # end if
+        return response
+    # end def inner
+    return remove_api_key_inner
+# end def
+
 @app.route("/info/<api_key>/<command>")
+@to_json_remove_api_key
 def info(api_key, command):
 
     """
@@ -50,6 +78,7 @@ def info(api_key, command):
 
 
 @app.route("/host")
+@to_json_remove_api_key
 def host():
     """
     Get infos about your host, like IP etc.
@@ -65,6 +94,7 @@ def host():
 
 
 @app.route("/init")
+@to_json_remove_api_key
 def init():
     path = "bot/" + API_KEY + "/income"
     hostname = HOSTNAME

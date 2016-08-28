@@ -25,7 +25,7 @@ class MLFW(object):
     # end def
 
     def search(self, string, inline_query_id, offset):
-        if not string:  # nothing entered.
+        if not string or string.lower().strip() == "best pony":  # nothing entered.
             string = "littlepip"
         results = []
         next_offset=None
