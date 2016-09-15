@@ -109,9 +109,15 @@ class MLFW(object):
             logger.debug("id: {id}".format(id=id))
             # results.append(InlineQueryResultArticle(id=id, thumb_url=image_small, title=u"{tag}".format(tag=img.title), message_text=image_full, description=img.description))
             if image_gif:
-                results.append(InlineQueryResultGif(id=id, title=img.title, gif_url=image_full, thumb_url=image_small, caption=self.str_to_caption(string)))
+                results.append(InlineQueryResultGif(
+                    id=id, title=img.title, gif_url=image_full, thumb_url=image_small,
+                    caption=self.str_to_caption(string), gif_height=img.height, gif_width=img.width
+                ))
             else:
-                results.append(InlineQueryResultPhoto(id=id, title=img.title, photo_url=image_full, thumb_url=image_small, caption=self.str_to_caption(string)))
+                results.append(InlineQueryResultPhoto(
+                    id=id, title=img.title, photo_url=image_full, thumb_url=image_small,
+                    caption=self.str_to_caption(string), photo_height=img.height, photo_width=img.width
+                ))
         for res in results:
             logger.debug(res.to_array())
         logger.debug("next_offset=" + str(next_offset))
