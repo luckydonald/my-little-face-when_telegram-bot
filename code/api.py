@@ -14,6 +14,15 @@ logger = logging.getLogger(__name__)
 
 
 class MLFW(object):
+    START_TEXT = "This bot can help you find and share images from mylittlefacewhen.com.\n" \
+                 "It works automatically, no need to add it anywhere. " \
+                 "Simply open any of your chats and type <code>@{username} something</code> in the message field. " \
+                 "Then tap on a result to send.\n" \
+                 "\n" \
+                 "For example, try typing <code>@{username} i need pictures</code> here."
+
+    HELP_TEXT = START_TEXT
+
     root = "http://mylittlefacewhen.com/"
     tag_search = "http://mylittlefacewhen.com/api/v2/tag/"
     tag_info = "http://mylittlefacewhen.com/api/v2/face/"

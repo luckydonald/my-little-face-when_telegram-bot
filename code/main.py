@@ -134,7 +134,17 @@ def income(api_key):
     update = Update.from_array(request.get_json())
     logger.debug("UPDATE: {}".format(update))
     # assert isinstance(msg, Message)
-    if "inline_query" in update and not update.inline_query:
+    if update.message and update.message.text:
+        receiver = update.message.chat.id
+        if update.message.text == "/start":
+            bot.send_message(receiver, mlfw.START_TEXT.format(username=username), parse_mode="html")
+            return "ok"
+        # end if
+        if update.message.text == "/help":
+            bot.send_message(receiver, mlfw.HELP_TEXT.format(username=username), parse_mode="html")
+            return "ok"
+        # end if
+    if not update.inline_query:
         logger.debug("Skipping update without inline query.")
         return "ok"
     inline_query_id = update.inline_query.id
