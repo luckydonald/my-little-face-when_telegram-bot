@@ -1,3 +1,3 @@
 luckydonald-utils  # always good to have
 flask  # flask (webserver)
-pytgbot  # bot api
+pytgbot==2.2.0  # bot api
