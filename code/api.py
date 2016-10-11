@@ -148,8 +148,8 @@ class MLFW(object):
         return "#{search}".format(search=search_string.strip().lower().replace(" ", "_"))
     # end def str_to_caption
 
-
-    def check_result(self, res):
+    @staticmethod
+    def check_result(res):
         if res.ok != True:
             raise TgApiServerException(
                 error_code=res.error_code if "error_code" in res else None,
