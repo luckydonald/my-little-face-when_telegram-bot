@@ -9,6 +9,7 @@ from pytgbot.api_types.receivable.updates import Update
 
 from secrets import API_KEY, HOSTNAME, URL_PATH
 from api import MLFW
+from sentry import add_error_reporting
 
 __author__ = 'luckydonald'
 logger = logging.getLogger(__name__)
@@ -17,6 +18,7 @@ VERSION = "1.3.1"
 __version__ = VERSION
 
 app = Flask(__name__)
+sentry = add_error_reporting(app)
 bot = Bot(API_KEY, return_python_objects=False)
 # Set `return_python_objects=False`
 # because we need to be really fast to answer inline queries in time,
