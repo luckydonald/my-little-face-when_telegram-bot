@@ -1,4 +1,4 @@
 luckydonald-utils  # always good to have
 flask  # flask (webserver)
-pytgbot==2.2.1a2  # bot api
+pytgbot>=2.3.3  # bot api
 raven[flask]  # debug
