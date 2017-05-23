@@ -13,8 +13,6 @@ logger = logging.getLogger(__name__)
 
 def add_error_reporting(app):
     sentry = Sentry(app)  # set SENTRY_DSN env!
-    handler = SentryHandler(sentry, level=logging.WARNING)
-    raven.conf.setup_logging(handler)
     app.add_url_rule('/sentry', 'is_sentry', is_sentry(sentry))
     return sentry
 # end def

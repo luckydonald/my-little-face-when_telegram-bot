@@ -107,7 +107,6 @@ def init():
     # end if
     webhook_url = "https://" + hostname + "/" + URL_PATH + "/" + path
     logger.success("URL: {}".format(webhook_url))
-    logger.debug(bot.set_webhook())
 
     # In case sending a custom public key
     # from pytgbot.api_types.sendable import InputFile
