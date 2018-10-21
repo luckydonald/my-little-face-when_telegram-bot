@@ -4,6 +4,7 @@ from DictObject import DictObject
 from flask import Flask
 from flask import request
 from luckydonaldUtils.logger import logging
+from luckydonaldUtils.tg_bots.gitinfo import version_bp
 from pytgbot import Bot
 from pytgbot.api_types.receivable.updates import Update
 
@@ -18,6 +19,8 @@ VERSION = "1.3.1"
 __version__ = VERSION
 
 app = Flask(__name__)
+app.register_blueprint(version_bp)
+
 sentry = add_error_reporting(app)
 bot = Bot(API_KEY, return_python_objects=False)
 # Set `return_python_objects=False`
