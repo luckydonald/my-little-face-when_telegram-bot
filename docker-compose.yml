@@ -1,0 +1,12 @@
+version: '2.1'
+services:
+  mlfw:
+    build: "./"
+    working_dir: /app
+    restart: "unless-stopped"
+    environment:
+      TG_API_KEY:
+      URL_PATH:
+      URL_HOSTNAME:
+    #volumes:
+    #  - ./code:/app/code:ro
