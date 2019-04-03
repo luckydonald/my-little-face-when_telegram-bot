@@ -1,4 +1,4 @@
-luckydonald-utils==0.61  # always good to have
+luckydonald-utils==0.72  # always good to have
 flask  # flask (webserver)
 pytgbot>=2.3.3  # bot api
 raven[flask]  # debug
